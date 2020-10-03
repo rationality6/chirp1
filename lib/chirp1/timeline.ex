@@ -103,10 +103,14 @@ defmodule Chirp1.Timeline do
     Post.changeset(post, attrs)
   end
 
-  defp broadcast({:error, _reason} = error, _event), do: error
-  defp broadcast({:ok, post}, event), do
-    Phoenix.PubSub.broadcast(Chirp1.PubSub,"posts",{evnetn,post})
-    {:ok, post}
+  def subscribe do
+    Phoenix.PubSub.subscribe(Chirp1.PubSub, "posts")
   end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, post}, event) do
+    Phoenix.PubSub.broadcast(Chirp1.PubSub, "posts", {event, post})
+    {:ok, post}
   end
 end
