@@ -19,6 +19,8 @@ defmodule Chirp1Web.Router do
 
     live "/", PageLive, :index
 
+    resources "/users", UserController
+
     live "/posts", PostLive.Index, :index
     live "/posts/new", PostLive.Index, :new
     live "/posts/:id/edit", PostLive.Index, :edit
