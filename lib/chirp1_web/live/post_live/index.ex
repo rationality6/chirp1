@@ -1,4 +1,6 @@
 defmodule Chirp1Web.PostLive.Index do
+  @moduledoc "Chirp1Web 의 postlive index 모듈입니다."
+
   use Chirp1Web, :live_view
 
   alias Chirp1.Timeline
@@ -37,7 +39,7 @@ defmodule Chirp1Web.PostLive.Index do
     post = Timeline.get_post!(id)
     {:ok, _} = Timeline.delete_post(post)
 
-    {:noreply, assign(socket, :posts, list_posts())}
+    {:noreply, assign(socket, :posts, post)}
   end
 
   defp list_posts do

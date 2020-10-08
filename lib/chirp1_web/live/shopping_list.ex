@@ -1,4 +1,8 @@
 defmodule ShoppingList do
+  @moduledoc """
+    쇼핑리스트 모듈
+  """
+
   use GenServer
 
   def start_link() do
@@ -25,7 +29,6 @@ defmodule ShoppingList do
 
   def terminate(_reason, list) do
     IO.puts("We are all done shopping")
-    IO.inspect(list)
     :ok
   end
 

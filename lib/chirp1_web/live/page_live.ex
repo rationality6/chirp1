@@ -1,4 +1,5 @@
 defmodule Chirp1Web.PageLive do
+  @moduledoc "pagelive"
   use Chirp1Web, :live_view
 
   @impl true

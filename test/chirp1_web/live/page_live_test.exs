@@ -14,5 +14,4 @@ defmodule Chirp1Web.PageLiveTest do
     assert disconnected_html =~ "Peace of mind from prototype to production"
     assert render(page_live) =~ "Peace of mind from prototype to production"
   end
-
 end
