@@ -1,0 +1,41 @@
+<h1>Listing Boards</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, Chirp1Web.BoardLive.FormComponent,
+    id: @board.id || :new,
+    title: @page_title,
+    action: @live_action,
+    board: @board,
+    return_to: Routes.board_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Username</th>
+      <th>Content</th>
+      <th>Likes count</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="boards">
+    <%= for board <- @boards do %>
+      <tr id="board-<%= board.id %>">
+        <td><%= board.title %></td>
+        <td><%= board.username %></td>
+        <td><%= board.content %></td>
+        <td><%= board.likes_count %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.board_show_path(@socket, :show, board) %></span>
+          <span><%= live_patch "Edit", to: Routes.board_index_path(@socket, :edit, board) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: board.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Board", to: Routes.board_index_path(@socket, :new) %></span>

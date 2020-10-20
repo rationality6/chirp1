@@ -1,0 +1,37 @@
+<h1>Show Board</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, Chirp1Web.BoardLive.FormComponent,
+    id: @board.id,
+    title: @page_title,
+    action: @live_action,
+    board: @board,
+    return_to: Routes.board_show_path(@socket, :show, @board) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @board.title %>
+  </li>
+
+  <li>
+    <strong>Username:</strong>
+    <%= @board.username %>
+  </li>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @board.content %>
+  </li>
+
+  <li>
+    <strong>Likes count:</strong>
+    <%= @board.likes_count %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.board_show_path(@socket, :edit, @board), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.board_index_path(@socket, :index) %></span>
