@@ -72,6 +72,7 @@ defmodule Chirp1.Timeline do
     post
     |> Post.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:post_created)
   end
 
   @doc """
