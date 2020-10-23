@@ -20,7 +20,10 @@ defmodule Chirp1Web.PostLive.PostComponent do
       </span>
 
       <span class="">
-        reposts_count: <%= @post.reposts_count %>
+        <a href="#" phx-click="repost" phx-target="<%= @myself %>">
+          reposts_count:
+        <%= @post.reposts_count %>
+        </a>
       </span>
 
       <span class="">
@@ -39,5 +42,15 @@ defmodule Chirp1Web.PostLive.PostComponent do
 
     </div>
     """
+  end
+
+  def handle_event("like", _, socket) do
+    Chirp1.Timeline.inc_likes(socket.assigns.post)
+    {:noreply, socket}
+  end
+
+  def handle_event("repost", _, socket) do
+    Chirp1.Timeline.inc_reposts(socket.assigns.post)
+    {:noreply, socket}
   end
 end

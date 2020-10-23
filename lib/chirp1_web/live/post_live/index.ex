@@ -7,9 +7,11 @@ defmodule Chirp1Web.PostLive.Index do
   alias Chirp1.Timeline.Post
 
   @impl true
+  @spec mount(any, any, Phoenix.LiveView.Socket.t()) ::
+          {:ok, Phoenix.LiveView.Socket.t(), [{:temporary_assigns, [...]}, ...]}
   def mount(_params, _session, socket) do
     if connected?(socket), do: Timeline.subscribe()
-    {:ok, assign(socket, :posts, list_posts())}
+    {:ok, assign(socket, :posts, fetch_posts())}
   end
 
   @impl true
@@ -40,7 +42,7 @@ defmodule Chirp1Web.PostLive.Index do
     post = Timeline.get_post!(id)
     {:ok, _} = Timeline.delete_post(post)
 
-    {:noreply, assign(socket, :posts, post)}
+    {:noreply, assign(socket, :posts, fetch_posts())}
   end
 
   @impl true
@@ -48,7 +50,11 @@ defmodule Chirp1Web.PostLive.Index do
     {:noreply, update(socket, :posts, fn posts -> [post | posts] end)}
   end
 
-  defp list_posts do
+  def handle_info({:post_updated, post}, socket) do
+    {:noreply, update(socket, :posts, fn posts -> [post | posts] end)}
+  end
+
+  defp fetch_posts do
     Timeline.list_posts()
   end
 end

@@ -6,11 +6,13 @@
     post: @post,
     return_to: Routes.post_index_path(@socket, :index) %>
 <% end %>
-<div id="posts">
+
+<div id="posts" phx-updated="prepend">
   <%= for post <- @posts do %>
     <%= live_component(@socket, Chirp1Web.PostLive.PostComponent, id: post.id, post: post)%>
   <% end %>
 </div>
+
 <span>
   <%= live_patch("New Post", to: Routes.post_index_path(@socket, :new)) %>
 </span>
